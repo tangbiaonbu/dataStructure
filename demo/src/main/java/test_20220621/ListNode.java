@@ -1,4 +1,4 @@
-package test_20220620;
+package test_20220621;
 
 /**
  * @author 唐少
@@ -7,8 +7,6 @@ package test_20220620;
  * @date 2022/6/20 23:24
  */
 public class ListNode {
-
-    private ListNode nodes = new ListNode();
 
     /**
      * 表示当前node的值
@@ -42,10 +40,5 @@ public class ListNode {
 
     public void setNext(ListNode next) {
         this.next = next;
-    }
-
-    public void addNode(ListNode node) {
-        nodes.setNext(node);
-        nodes = nodes.getNext();
     }
 }
