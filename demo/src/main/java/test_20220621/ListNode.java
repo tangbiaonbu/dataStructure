@@ -21,9 +21,8 @@ public class ListNode {
     public ListNode() {
     }
 
-    public ListNode(String value, ListNode next) {
+    public ListNode(String value) {
         this.value = value;
-        this.next = next;
     }
 
     public String getValue() {

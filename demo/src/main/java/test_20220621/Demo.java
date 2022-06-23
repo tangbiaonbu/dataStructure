@@ -1,8 +1,7 @@
 package test_20220621;
 
-import test_20220620.ListNode;
-
 import java.util.Objects;
+import java.util.Stack;
 
 /**
  * @author 唐少
@@ -12,41 +11,82 @@ import java.util.Objects;
  */
 public class Demo {
     public static void main(String[] args) {
-        ListNode a = new ListNode("a", null);
-        ListNode b = new ListNode("b", a);
-        ListNode c = new ListNode("c", b);
-        ListNode d = new ListNode("d", c);
-        ListNode e = new ListNode("e", d);
-        ListNode f = new ListNode("f", e);
-        // f->e->d->c->b->a
+        ListNode a = new ListNode("a");
+        ListNode b = new ListNode("b");
+        ListNode c = new ListNode("c");
+        ListNode d = new ListNode("d");
+        ListNode e = new ListNode("e");
+        ListNode f = new ListNode("f");
+
         String value = "d";
-        // f->e->c->b->a
-        ListNode node = removeNode(f, value);
-        System.out.println(node);
+
+        a.setNext(b);
+        b.setNext(c);
+        c.setNext(d);
+        d.setNext(e);
+        e.setNext(f);
+        printfTailToStart2(a);
     }
 
-    private static ListNode removeNode(ListNode ln, String value) {
+    /**
+     * 从尾到头打印链表
+     *
+     * @param a
+     */
+    private static void printfTailToStart(ListNode a) {
+        Stack<String> nodes = new Stack<>();
+        while (Objects.nonNull(a)) {
+            nodes.push(a.getValue());
+            a = a.getNext();
+        }
+        while (!nodes.isEmpty()) {
+            String pop = nodes.pop();
+            System.out.println(pop);
+        }
+    }
+
+    /**
+     * 从尾到头打印链表2
+     *
+     * @param a
+     */
+    private static void printfTailToStart2(ListNode a) {
+        if (Objects.isNull(a)) {
+            return;
+        }
+        if (a.getNext() != null) {
+            // a b c d e f
+            printfTailToStart2(a.getNext());
+        }
+        System.out.println(a.getValue());
+    }
+
+
+    /**
+     * 删除节点
+     *
+     * @param head
+     * @param value
+     * @return
+     */
+    private static ListNode removeNode(ListNode head, String value) {
         // 异常边界
-        if (Objects.isNull(ln) || Objects.isNull(value)) {
-            return ln;
+        if (Objects.isNull(head) || Objects.isNull(value)) {
+            return head;
         }
-        // 先判断第一个节点是否是相同
-        if (ln.getValue().equals(value)) {
-            return ln.getNext();
-        } else {
-            ListNode needDeleteNode = ln;
-            // 向下递归遍历  f->e->d->c->b->a
-            while (ln.getNext() != null && !ln.getValue().equals(value)) {
-                needDeleteNode.setValue(ln.getValue());
-                needDeleteNode.setNext(ln.getNext());
-                ln = ln.getNext();
-            }
-            // 相同的时候进行连接
-            if (ln.getNext() != null && ln.getValue().equals(value)) {
-
-
-            }
+        if (head.getValue().equals(value)) {
+            return head.getNext();
         }
-        return null;
+        ListNode pre = head;
+        ListNode cur = head;
+        cur = cur.getNext();
+        while (Objects.nonNull(cur)) {
+            if (cur.getValue().equals(value)) {
+                pre.setNext(cur.getNext());
+            }
+            cur = cur.getNext();
+            pre = pre.getNext();
+        }
+        return head;
     }
 }
